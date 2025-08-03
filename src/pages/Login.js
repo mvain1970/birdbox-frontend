@@ -15,7 +15,7 @@ function Login() {
     e.preventDefault();
     setError("");
     try {
-      const res = await axios.post("http://192.168.0.100:4000/auth/login", {
+      const res = await axios.post(`${window.location.origin}/auth/login`, {
         username,
         password,
         token,

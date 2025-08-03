@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import TelemetryPage from "./pages/TelemetryPage";
 import { AuthContext } from "./AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const { jwt, setJwt } = useContext(AuthContext);
@@ -24,6 +26,7 @@ function App() {
         ) : (
           <>
             <Link to="/dashboard">Dashboard</Link> |{" "}
+            <Link to="/telemetry">Telemetry</Link> |{" "}
             <button
               onClick={handleLogout}
               style={{
@@ -43,7 +46,22 @@ function App() {
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/telemetry"
+            element={
+              <ProtectedRoute>
+                <TelemetryPage />
+              </ProtectedRoute>
+            }
+          />
       </Routes>
     </Router>
   );

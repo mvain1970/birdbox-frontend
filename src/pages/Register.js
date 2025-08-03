@@ -12,7 +12,7 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://192.168.0.100:4000/auth/register", {
+      const res = await axios.post("/auth/register", {
         username,
         email,
         password,
@@ -27,7 +27,7 @@ function Register() {
   const handleVerify = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://192.168.0.100:4000/auth/verify", { username, token });
+      await axios.post("/auth/verify", { username, token });
       alert("✅ Registration complete! You can now log in.");
     } catch {
       alert("Invalid 2FA code");
