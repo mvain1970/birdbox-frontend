@@ -3,25 +3,24 @@ import React, { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [jwt, setJwtState] = useState(null);
+  const [jwt, setJwt] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const stored = localStorage.getItem("jwt");
-    if (stored) {
-      setJwtState(stored);
+    const storedJwt = localStorage.getItem("jwt");
+    if (storedJwt) {
+      setJwt(storedJwt);
     }
     setLoading(false);
   }, []);
 
-  const setJwt = (token) => {
-    setJwtState(token);
-    if (token) {
-      localStorage.setItem("jwt", token);
+  useEffect(() => {
+    if (jwt) {
+      localStorage.setItem("jwt", jwt);
     } else {
       localStorage.removeItem("jwt");
     }
-  };
+  }, [jwt]);
 
   return (
     <AuthContext.Provider value={{ jwt, setJwt, loading }}>

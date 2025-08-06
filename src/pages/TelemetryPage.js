@@ -125,14 +125,29 @@ export default function TelemetryPage() {
 
   const { jwt, loading } = useContext(AuthContext);
 
+  console.log("TelemetryPage render → jwt:", jwt, "loading:", loading);
+
+
   useEffect(() => {
+
+    console.log("useEffect triggered with:", { jwt, loading });
+    
     if (loading || !jwt) {
       console.log("Telemetry skipped — loading:", loading, "jwt:", jwt);
       return;
     }
-
+    
+    console.log("JWT in TelemetryPage:", jwt);
+    
     const fetchTelemetry = () => {
       console.log("Fetching telemetry with JWT:", jwt);
+      
+      console.log("Sending fetch with headers:", {
+        Authorization: `Bearer ${jwt}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        });
+
         fetch("/data/telemetry", {
           headers: {
             "Authorization": `Bearer ${jwt}`,
